@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FLEX FITNESS GYM — Malir Cantt, Karachi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --black:#0a0a0a;
+    --panel:#131313;
+    --panel-2:#181818;
+    --bone:#f2ede3;
+    --steel:#8f8f8f;
+    --steel-dim:#5a5a5a;
+    --ember:#ff4423;
+    --ember-dim:#7a2415;
+    --line:rgba(242,237,227,0.09);
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--bone);
+    font-family:'Space Grotesk',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--ember);color:var(--black);}
+  a{color:inherit;}
+  img,svg{display:block;}
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.15rem 3.5rem;
+    background:rgba(10,10,10,0.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{
+    font-family:'Anton',sans-serif;
+    font-size:1.5rem;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .logo .dot{color:var(--ember);}
+  .nav-links{display:flex; gap:2.2rem; list-style:none;}
+  .nav-links button{
+    background:none;border:none;cursor:pointer;
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--steel); font-size:0.78rem; font-weight:500;
+    letter-spacing:0.12em; text-transform:uppercase;
+    transition:color 0.2s;
+  }
+  .nav-links button:hover,.nav-links button.active{color:var(--ember);}
+  .nav-cta{
+    background:var(--ember); color:var(--black);
+    border:none; cursor:pointer;
+    padding:0.6rem 1.3rem; border-radius:2px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700; font-size:0.78rem; letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition:opacity 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover{opacity:0.85; transform:translateY(-1px);}
+  .nav-burger{display:none;}
+
+  /* ===== BACKGROUND QUOTES (fixed ambient layer) ===== */
+  .quote-layer{
+    position:fixed; inset:0; z-index:0;
+    pointer-events:none; overflow:hidden;
+  }
+  .drift-quote{
+    position:absolute;
+    font-family:'Anton',sans-serif;
+    color:rgba(242,237,227,0.035);
+    white-space:nowrap;
+    letter-spacing:0.02em;
+    user-select:none;
+    animation:drift 26s ease-in-out infinite;
+  }
+  .drift-quote.b{color:rgba(255,68,35,0.045);}
+  @keyframes drift{
+    0%{transform:translate(0,0) rotate(-4deg);}
+    50%{transform:translate(18px,-22px) rotate(-2deg);}
+    100%{transform:translate(0,0) rotate(-4deg);}
+  }
+  .q1{top:14%; left:6%; font-size:4.2rem; animation-duration:22s;}
+  .q2{top:38%; right:4%; font-size:3.4rem; animation-duration:29s; animation-delay:-6s;}
+  .q3{top:64%; left:10%; font-size:5rem; animation-duration:24s; animation-delay:-3s;}
+  .q4{top:82%; right:8%; font-size:3rem; animation-duration:27s; animation-delay:-10s;}
+  .q5{top:4%; right:22%; font-size:2.6rem; animation-duration:20s; animation-delay:-14s;}
+
+  /* ===== HERO ===== */
+  #home{
+    position:relative; min-height:100vh; z-index:1;
+    display:flex; align-items:center;
+    padding:9rem 3.5rem 4rem;
+  }
+  .hero-inner{display:flex; align-items:center; gap:3rem; width:100%; max-width:1400px; margin:0 auto;}
+  .hero-copy{flex:1; min-width:0;}
+  .hero-tag{
+    font-size:0.75rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--ember); font-weight:600; margin-bottom:1.4rem;
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .hero-tag::before{content:''; width:26px; height:1px; background:var(--ember);}
+  .hero-title{
+    font-size:clamp(3rem, 7vw, 6.2rem);
+    line-height:0.92;
+    margin-bottom:1.6rem;
+  }
+  .hero-title .out{-webkit-text-stroke:1.5px var(--bone); color:transparent;}
+  .hero-title .fill{color:var(--ember);}
+  .hero-desc{
+    max-width:460px; color:var(--steel); line-height:1.75;
+    font-size:1rem; margin-bottom:2.4rem; font-weight:300;
+  }
+  .hero-actions{display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2.8rem;}
+  .btn-primary{
+    background:var(--ember); color:var(--black); border:none; cursor:pointer;
+    padding:0.95rem 2.1rem; font-weight:700; font-size:0.82rem;
+    letter-spacing:0.1em; text-transform:uppercase; border-radius:2px;
+    transition:opacity 0.2s, transform 0.2s;
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .btn-primary:hover{opacity:0.85; transform:translateY(-2px);}
+  .btn-ghost{
+    background:none; color:var(--bone); cursor:pointer;
+    padding:0.95rem 2.1rem; font-weight:500; font-size:0.82rem;
+    letter-spacing:0.1em; text-transform:uppercase;
+    border:1px solid rgba(242,237,227,0.22); border-radius:2px;
+    transition:border-color 0.2s, color 0.2s;
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .btn-ghost:hover{border-color:var(--ember); color:var(--ember);}
+  .hero-stats{display:flex; gap:2.4rem;}
+  .hero-stats div{border-left:2px solid var(--ember); padding-left:0.9rem;}
+  .hero-stats .num{font-family:'Anton',sans-serif; font-size:1.7rem;}
+  .hero-stats .lbl{font-size:0.7rem; color:var(--steel); letter-spacing:0.08em; text-transform:uppercase;}
+
+  /* ===== 3D DUMBBELL ===== */
+  .dumbbell-stage{
+    flex:0 0 380px; height:380px;
+    display:flex; align-items:center; justify-content:center;
+    perspective:1000px;
+  }
+  .dumbbell{
+    position:relative; width:280px; height:90px;
+    transform-style:preserve-3d;
+    animation:spin 9s linear infinite;
+  }
+  @keyframes spin{
+    from{transform:rotateY(0deg) rotateX(8deg);}
+    to{transform:rotateY(360deg) rotateX(8deg);}
+  }
+  .bar{
+    position:absolute; top:50%; left:50%;
+    width:160px; height:14px;
+    background:linear-gradient(180deg,#3a3a3a,#0f0f0f);
+    transform:translate(-50%,-50%);
+    border-radius:6px;
+    box-shadow:inset 0 2px 3px rgba(255,255,255,0.12), inset 0 -2px 4px rgba(0,0,0,0.6);
+  }
+  .plate{
+    position:absolute; top:50%;
+    width:22px; height:90px;
+    border-radius:5px;
+    background:linear-gradient(180deg,#2c2c2c,#050505);
+    box-shadow:inset 0 0 0 2px rgba(255,68,35,0.55), inset 3px 0 6px rgba(255,255,255,0.06);
+    transform-style:preserve-3d;
+  }
+  .plate.p1{left:calc(50% - 100px); height:90px; transform:translateY(-50%);}
+  .plate.p2{left:calc(50% - 122px); height:66px; transform:translateY(-50%);}
+  .plate.p3{left:calc(50% + 78px); height:90px; transform:translateY(-50%);}
+  .plate.p4{left:calc(50% + 100px); height:66px; transform:translateY(-50%);}
+  .dumbbell-glow{
+    position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(255,68,35,0.16), transparent 70%);
+    filter:blur(10px); z-index:-1;
+  }
+
+  /* ===== MARQUEE ===== */
+  .marquee-wrap{overflow:hidden; padding:1.1rem 0; background:var(--ember); position:relative; z-index:1;}
+  .marquee-track{display:flex; gap:2.6rem; width:max-content; animation:marquee 16s linear infinite;}
+  .marquee-track span{
+    font-family:'Anton',sans-serif; font-size:1.15rem; letter-spacing:0.05em;
+    color:var(--black); text-transform:uppercase; display:flex; align-items:center; gap:2.6rem;
+  }
+  .marquee-track span::after{content:'●'; font-size:0.6rem;}
+  @keyframes marquee{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ===== SECTION SHARED ===== */
+  section{padding:6rem 3.5rem; position:relative; z-index:1;}
+  .section-inner{max-width:1200px; margin:0 auto;}
+  .eyebrow{
+    font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--ember); font-weight:600; margin-bottom:0.9rem;
+  }
+  .section-title{font-size:clamp(2.2rem,4.5vw,3.6rem); line-height:1; margin-bottom:1.2rem;}
+  .section-sub{color:var(--steel); max-width:520px; font-weight:300; line-height:1.7; margin-bottom:3rem;}
+
+  /* ===== ABOUT STRIP ===== */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:2rem;}
+  .about-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:4px;
+    padding:2rem 1.7rem; transition:border-color 0.25s, transform 0.25s;
+  }
+  .about-card:hover{border-color:var(--ember); transform:translateY(-4px);}
+  .about-card .num{font-family:'Anton',sans-serif; color:var(--ember); font-size:1rem; margin-bottom:0.9rem;}
+  .about-card h3{font-family:'Space Grotesk',sans-serif; text-transform:none; font-size:1.05rem; font-weight:600; margin-bottom:0.6rem;}
+  .about-card p{color:var(--steel); font-size:0.9rem; line-height:1.65; font-weight:300;}
+
+  /* ===== TABS PANEL ===== */
+  #hub{background:var(--panel-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .tab-bar{
+    display:flex; gap:0.5rem; margin-bottom:3rem; flex-wrap:wrap;
+    border-bottom:1px solid var(--line); padding-bottom:0;
+  }
+  .tab-btn{
+    background:none; border:none; cursor:pointer; color:var(--steel);
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.85rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    padding:1rem 1.5rem; border-bottom:2px solid transparent;
+    transition:color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover{color:var(--bone);}
+  .tab-btn.active{color:var(--ember); border-color:var(--ember);}
+  .tab-panel{display:none; animation:fadeUp 0.45s ease;}
+  .tab-panel.active{display:block;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+
+  /* Timings tab */
+  .timing-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem;}
+  .timing-row{
+    background:var(--panel); border:1px solid var(--line); border-radius:4px;
+    padding:1.3rem 1.4rem; display:flex; flex-direction:column; gap:0.5rem;
+  }
+  .timing-row.today{border-color:var(--ember);}
+  .timing-day{font-weight:700; letter-spacing:0.04em; text-transform:uppercase; font-size:0.85rem;}
+  .timing-hours{color:var(--steel); font-size:0.88rem; font-weight:300; line-height:1.5;}
+  .timing-hours.closed{color:var(--ember-dim);}
+
+  /* Membership tab */
+  .entry-note{
+    display:flex; align-items:center; gap:1rem; margin-bottom:2.4rem;
+    background:rgba(255,68,35,0.08); border:1px solid rgba(255,68,35,0.3);
+    padding:1.1rem 1.4rem; border-radius:4px; max-width:560px;
+  }
+  .entry-note .tag{
+    font-family:'Anton',sans-serif; background:var(--ember); color:var(--black);
+    padding:0.35rem 0.7rem; border-radius:3px; font-size:0.85rem; white-space:nowrap;
+  }
+  .entry-note p{font-size:0.88rem; color:var(--bone); font-weight:300;}
+  .pricing-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.6rem; max-width:900px;}
+  .pricing-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:6px;
+    padding:2.2rem 1.9rem; transition:transform 0.25s, border-color 0.25s;
+  }
+  .pricing-card:hover{transform:translateY(-5px);}
+  .pricing-card.featured{border-color:var(--ember); background:linear-gradient(180deg,rgba(255,68,35,0.07),var(--panel));}
+  .plan-tag{font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--steel); margin-bottom:0.5rem;}
+  .plan-tag.accent{color:var(--ember);}
+  .plan-name{font-size:1.6rem; margin-bottom:0.8rem;}
+  .plan-price{font-family:'Anton',sans-serif; font-size:2.6rem; margin-bottom:0.3rem;}
+  .plan-price sup{font-size:1.1rem; margin-right:2px;}
+  .plan-price .per{font-size:0.95rem; color:var(--steel); font-family:'Space Grotesk',sans-serif; font-weight:400;}
+  .plan-note{color:var(--steel); font-size:0.82rem; margin-bottom:1.6rem; font-weight:300;}
+  .plan-features{list-style:none; margin-bottom:2rem;}
+  .plan-features li{
+    font-size:0.88rem; color:var(--bone); padding:0.55rem 0; font-weight:300;
+    border-top:1px solid var(--line); display:flex; align-items:center; gap:0.6rem;
+  }
+  .plan-features li::before{content:'+'; color:var(--ember); font-weight:700;}
+  .plan-btn{
+    display:block; text-align:center; text-decoration:none; cursor:pointer; border:none;
+    width:100%; padding:0.9rem; font-weight:700; font-size:0.8rem;
+    letter-spacing:0.08em; text-transform:uppercase; border-radius:3px;
+    font-family:'Space Grotesk',sans-serif; transition:opacity 0.2s;
+  }
+  .plan-btn-solid{background:var(--ember); color:var(--black);}
+  .plan-btn-outline{background:none; color:var(--bone); border:1px solid rgba(242,237,227,0.25);}
+  .plan-btn:hover{opacity:0.82;}
+
+  /* Contact tab */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:2.4rem;}
+  .contact-detail{display:flex; flex-direction:column; gap:0;}
+  .contact-row{
+    display:flex; justify-content:space-between; gap:1rem; padding:1.1rem 0;
+    border-top:1px solid var(--line); font-size:0.9rem;
+  }
+  .contact-row span:first-child{color:var(--steel); text-transform:uppercase; font-size:0.72rem; letter-spacing:0.1em; padding-top:0.15rem;}
+  .contact-row span:last-child{text-align:right; font-weight:500;}
+  .contact-row a{text-decoration:none; transition:color 0.2s;}
+  .contact-row a:hover{color:var(--ember);}
+  .map-box{
+    border:1px solid var(--line); border-radius:6px; overflow:hidden; min-height:280px;
+  }
+  .map-box iframe{width:100%; height:100%; min-height:280px; border:0; filter:grayscale(0.4) invert(0.92) contrast(0.9);}
+
+  /* Join / Form tab */
+  .form-wrap{max-width:640px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;}
+  .form-group{margin-bottom:1.3rem;}
+  .form-group label{
+    display:block; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--steel); margin-bottom:0.55rem;
+  }
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%; background:var(--panel); border:1px solid var(--line); color:var(--bone);
+    padding:0.85rem 1rem; font-family:'Space Grotesk',sans-serif; font-size:0.92rem;
+    border-radius:3px; outline:none; transition:border-color 0.2s;
+  }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--ember);}
+  .form-group textarea{min-height:110px; resize:vertical;}
+  .package-choice{display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.3rem;}
+  .pkg-option{
+    border:1px solid var(--line); border-radius:4px; padding:1rem 1.1rem; cursor:pointer;
+    transition:border-color 0.2s, background 0.2s; position:relative;
+  }
+  .pkg-option input{position:absolute; opacity:0; inset:0; cursor:pointer; width:100%; height:100%;}
+  .pkg-option .pkg-title{font-weight:700; font-size:0.9rem; margin-bottom:0.2rem;}
+  .pkg-option .pkg-price{color:var(--ember); font-size:0.85rem; font-weight:600;}
+  .pkg-option:has(input:checked){border-color:var(--ember); background:rgba(255,68,35,0.07);}
+  .form-submit{
+    background:var(--ember); color:var(--black); border:none; cursor:pointer;
+    padding:1rem 2.4rem; font-weight:700; font-size:0.85rem; letter-spacing:0.1em;
+    text-transform:uppercase; border-radius:3px; transition:opacity 0.2s;
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .form-submit:hover{opacity:0.85;}
+  #form-confirm{color:var(--ember); font-size:0.85rem; margin-top:1rem; display:none; font-weight:500;}
+
+  /* ===== FOOTER ===== */
+  footer{
+    padding:3rem 3.5rem; display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid var(--line); flex-wrap:wrap; gap:1.5rem; position:relative; z-index:1;
+  }
+  .footer-logo{font-family:'Anton',sans-serif; font-size:1.3rem;}
+  .footer-logo span{color:var(--ember);}
+  .footer-links{display:flex; gap:1.8rem; list-style:none; flex-wrap:wrap;}
+  .footer-links a{text-decoration:none; color:var(--steel); font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; transition:color 0.2s;}
+  .footer-links a:hover{color:var(--ember);}
+  footer p{color:var(--steel-dim); font-size:0.78rem;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:900px){
+    nav{padding:1rem 1.4rem;}
+    .nav-links{display:none;}
+    section{padding:4.5rem 1.4rem;}
+    #home{padding:8rem 1.4rem 3rem;}
+    .hero-inner{flex-direction:column;}
+    .dumbbell-stage{flex:none; width:220px; height:220px; margin-top:1rem;}
+    .dumbbell{transform:scale(0.72);}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .package-choice{grid-template-columns:1fr;}
+    footer{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="quote-layer" aria-hidden="true">
+  <span class="drift-quote q1">NO PAIN NO GAIN</span>
+  <span class="drift-quote b q2">WORK HARD</span>
+  <span class="drift-quote q3">STAY CONSISTENT</span>
+  <span class="drift-quote b q4">BUILT NOT BORN</span>
+  <span class="drift-quote q5">PUSH LIMITS</span>
+</div>
+
+<nav>
+  <a href="#home" class="logo">FLEX<span class="dot">.</span>FITNESS</a>
+  <ul class="nav-links">
+    <li><button data-scroll="home">Home</button></li>
+    <li><button data-scroll="hub" data-tab="timings">Timings</button></li>
+    <li><button data-scroll="hub" data-tab="membership">Membership</button></li>
+    <li><button data-scroll="hub" data-tab="contact">Contact</button></li>
+  </ul>
+  <button class="nav-cta" data-scroll="hub" data-tab="join">Join Now</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="hero-tag">Malir Cantt · Karachi</p>
+      <h1 class="hero-title">
+        TRAIN<br>
+        <span class="out">HARDER.</span><br>
+        <span class="fill">FLEX</span> FITNESS.
+      </h1>
+      <p class="hero-desc">A no-frills strength gym in the heart of Malir Cantt. Free weights, real equipment, and coaches who actually spot you. Entry fee once, then pick your package — no long contracts, no gimmicks.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" data-scroll="hub" data-tab="join">Join Now</button>
+        <button class="btn-ghost" data-scroll="hub" data-tab="membership">View Packages</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">6</div><div class="lbl">Days Open</div></div>
+        <div><div class="num">Rs3K</div><div class="lbl">From / month</div></div>
+        <div><div class="num">2x</div><div class="lbl">Sessions Daily</div></div>
+      </div>
+    </div>
+    <div class="dumbbell-stage" aria-hidden="true">
+      <div class="dumbbell-glow"></div>
+      <div class="dumbbell">
+        <div class="bar"></div>
+        <div class="plate p2"></div>
+        <div class="plate p1"></div>
+        <div class="plate p4"></div>
+        <div class="plate p3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>STRENGTH</span><span>DISCIPLINE</span><span>CONSISTENCY</span><span>RESULTS</span>
+    <span>STRENGTH</span><span>DISCIPLINE</span><span>CONSISTENCY</span><span>RESULTS</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="eyebrow">Why Flex</p>
+    <h2 class="section-title">Built On The Basics</h2>
+    <p class="section-sub">No fancy branding, just a gym that works. Here's what you're actually getting when you walk in.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="num">01</div>
+        <h3>Full Equipment Floor</h3>
+        <p>Free weights, machines, and cardio — enough space and gear that you're never standing around waiting.</p>
+      </div>
+      <div class="about-card">
+        <div class="num">02</div>
+        <h3>Morning & Evening Slots</h3>
+        <p>Two windows a day, six days a week, so it fits around college, work, or whatever your schedule looks like.</p>
+      </div>
+      <div class="about-card">
+        <div class="num">03</div>
+        <h3>Personal Training Option</h3>
+        <p>Want a coach watching your form and pushing your numbers? Upgrade to the trainer package, anytime.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HUB: TABS -->
+<section id="hub">
+  <div class="section-inner">
+    <p class="eyebrow">Everything You Need</p>
+    <h2 class="section-title">Timings, Membership & Contact</h2>
+    <p class="section-sub">Pick a tab below — check when we're open, compare packages, or fill out the form to reserve your spot.</p>
+
+    <div class="tab-bar" role="tablist">
+      <button class="tab-btn active" data-tab-btn="timings">Timings</button>
+      <button class="tab-btn" data-tab-btn="membership">Membership</button>
+      <button class="tab-btn" data-tab-btn="contact">Contact</button>
+      <button class="tab-btn" data-tab-btn="join">Join / Form</button>
+    </div>
+
+    <!-- TIMINGS TAB -->
+    <div class="tab-panel active" id="tab-timings">
+      <div class="timing-grid">
+        <div class="timing-row">
+          <div class="timing-day">Monday</div>
+          <div class="timing-hours">7:00 AM – 9:00 AM<br>5:00 PM – 11:30 PM</div>
+        </div>
+        <div class="timing-row">
+          <div class="timing-day">Tuesday</div>
+          <div class="timing-hours">7:00 AM – 9:00 AM<br>5:00 PM – 11:30 PM</div>
+        </div>
+        <div class="timing-row">
+          <div class="timing-day">Wednesday</div>
+          <div class="timing-hours">5:00 PM – 11:30 PM<br>5:00 PM – 9:00 AM</div>
+        </div>
+        <div class="timing-row">
+          <div class="timing-day">Thursday</div>
+          <div class="timing-hours">7:00 AM – 9:00 AM<br>5:00 PM – 11:30 PM</div>
+        </div>
+        <div class="timing-row">
+          <div class="timing-day">Friday</div>
+          <div class="timing-hours">7:00 AM – 9:00 AM<br>5:00 PM – 11:30 PM</div>
+        </div>
+        <div class="timing-row">
+          <div class="timing-day">Saturday</div>
+          <div class="timing-hours">7:00 AM – 9:00 AM<br>5:00 PM – 11:30 PM</div>
+        </div>
+        <div class="timing-row">
+          <div class="timing-day">Sunday</div>
+          <div class="timing-hours closed">Closed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMBERSHIP TAB -->
+    <div class="tab-panel" id="tab-membership">
+      <div class="entry-note">
+        <span class="tag">One-Time</span>
+        <p>Every membership starts with a one-time entry fee of <strong>Rs 5,000</strong>, then you choose a monthly package below.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <p class="plan-tag">Package 1</p>
+          <h3 class="plan-name">Self-Training</h3>
+          <div class="plan-price"><sup>Rs</sup>3,000<span class="per">/mo</span></div>
+          <p class="plan-note">Full gym access, no trainer</p>
+          <ul class="plan-features">
+            <li>Full equipment access</li>
+            <li>Morning & evening slots</li>
+            <li>Locker access</li>
+          </ul>
+          <button class="plan-btn plan-btn-outline" data-scroll="hub" data-tab="join" data-package="Package 1 - Rs 3,000/mo (No Trainer)">Choose Package 1</button>
+        </div>
+        <div class="pricing-card featured">
+          <p class="plan-tag accent">Most Popular</p>
+          <h3 class="plan-name">With Trainer</h3>
+          <div class="plan-price"><sup>Rs</sup>5,000<span class="per">/mo</span></div>
+          <p class="plan-note">Full gym access + personal trainer</p>
+          <ul class="plan-features">
+            <li>Full equipment access</li>
+            <li>Personal trainer included</li>
+            <li>Custom workout plan</li>
+            <li>Form correction & guidance</li>
+          </ul>
+          <button class="plan-btn plan-btn-solid" data-scroll="hub" data-tab="join" data-package="Package 2 - Rs 5,000/mo (With Trainer)">Choose Package 2</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT TAB -->
+    <div class="tab-panel" id="tab-contact">
+      <div class="contact-grid">
+        <div>
+          <div class="contact-detail">
+            <div class="contact-row"><span>Address</span><span>S-13 Malir Cantt Bazar Area, Karachi, Pakistan</span></div>
+            <div class="contact-row"><span>Phone</span><span><a href="tel:03432649377">0343 2649377</a></span></div>
+            <div class="contact-row"><span>Phone 2</span><span><a href="tel:03337245619">0333 7245619</a></span></div>
+            <div class="contact-row"><span>Email</span><span><a href="mailto:Zohaib.tamimi@gmail.com">Zohaib.tamimi@gmail.com</a></span></div>
+            <div class="contact-row"><span>Facebook</span><span><a href="https://www.facebook.com/share/19HUb19ufW/?mibextid=wwXIfr" target="_blank" rel="noopener">Flex Fitness Gym</a></span></div>
+          </div>
+        </div>
+        <div class="map-box">
+          <iframe title="Flex Fitness Gym location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=S-13+Malir+Cantt+Bazar+Area+Karachi+Pakistan&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOIN / FORM TAB -->
+    <div class="tab-panel" id="tab-join">
+      <div class="form-wrap">
+        <form id="join-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Ali" required/>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Khan" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="you@email.com" required/>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" placeholder="03XX XXXXXXX"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Select Package</label>
+            <div class="package-choice">
+              <label class="pkg-option">
+                <input type="radio" name="package" value="Package 1 - Rs 3,000/mo (No Trainer)" required/>
+                <div class="pkg-title">Package 1</div>
+                <div class="pkg-price">Rs 3,000/mo · No Trainer</div>
+              </label>
+              <label class="pkg-option">
+                <input type="radio" name="package" value="Package 2 - Rs 5,000/mo (With Trainer)" required/>
+                <div class="pkg-title">Package 2</div>
+                <div class="pkg-price">Rs 5,000/mo · With Trainer</div>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Message (optional)</label>
+            <textarea placeholder="Anything we should know? Goals, timing preference, etc."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Enquiry</button>
+          <p id="form-confirm">Thanks — your enquiry has been received. We'll contact you shortly.</p>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">FLEX<span>.</span>FITNESS</div>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#hub" data-tab-link="timings">Timings</a></li>
+    <li><a href="#hub" data-tab-link="membership">Membership</a></li>
+    <li><a href="#hub" data-tab-link="contact">Contact</a></li>
+  </ul>
+  <p>&copy; 2026 Flex Fitness Gym, Malir Cantt, Karachi.</p>
+</footer>
+
+<script>
+  // Tab switching
+  const tabBtns = document.querySelectorAll('[data-tab-btn]');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  function setTab(name){
+    tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tabBtn === name));
+    tabPanels.forEach(p => p.classList.toggle('active', p.id === 'tab-' + name));
+  }
+
+  tabBtns.forEach(b => b.addEventListener('click', () => setTab(b.dataset.tabBtn)));
+
+  // Any element with data-scroll (+ optional data-tab) scrolls to section and opens a tab
+  document.querySelectorAll('[data-scroll]').forEach(el => {
+    el.addEventListener('click', () => {
+      const target = document.getElementById(el.dataset.scroll);
+      if (el.dataset.tab) setTab(el.dataset.tab);
+      if (el.dataset.package){
+        // pre-select package radio on the join form
+        setTimeout(() => {
+          const radio = document.querySelector(`input[name="package"][value="${CSS.escape(el.dataset.package)}"]`);
+          if (radio) radio.checked = true;
+        }, 50);
+      }
+      if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  document.querySelectorAll('[data-tab-link]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      setTab(el.dataset.tabLink);
+    });
+  });
+
+  // Fake form submit
+  function handleSubmit(e){
+    e.preventDefault();
+    document.getElementById('form-confirm').style.display = 'block';
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
